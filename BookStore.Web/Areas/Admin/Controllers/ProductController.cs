@@ -54,9 +54,9 @@ namespace BookStore.Web.Areas.Admin.Controllers
          else
          {
             //update product
+            productVM.Product = context.Product.GetFirstOrDefault(p => p.Id == id);
+            return View(productVM);
          }
-
-         return View(productVM);
       }
    }
 }
