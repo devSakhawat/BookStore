@@ -2,7 +2,7 @@
 using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BookStore.Web.Controllers
+namespace BookStore.Web.Areas.Admin.Controllers
 {
    public class CategoryController : Controller
    {
@@ -31,10 +31,15 @@ namespace BookStore.Web.Controllers
       [ValidateAntiForgeryToken]
       public IActionResult Create(Category model)
       {
+         if (model.Name == model.DisplayOrder.ToString())
+         {
+            ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the name.");
+         }
          if (ModelState.IsValid)
          {
             context.Category.Add(model);
             context.Save();
+            TempData["success"] = "Category created successfully.";
             return RedirectToAction(nameof(Index));
          }
          return View(model);
@@ -63,10 +68,15 @@ namespace BookStore.Web.Controllers
       [ValidateAntiForgeryToken]
       public IActionResult Edit(Category model)
       {
+         if (model.Name == model.DisplayOrder.ToString())
+         {
+            ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the name.");
+         }
          if (ModelState.IsValid)
          {
             context.Category.Update(model);
             context.Save();
+            TempData["success"] = "Category updated successfully.";
             return RedirectToAction(nameof(Index));
          }
          return View(model);
@@ -115,7 +125,7 @@ namespace BookStore.Web.Controllers
 
          context.Category.Remove(category);
          context.Save();
-
+         TempData["success"] = "Category deleted successfully.";
          return RedirectToAction(nameof(Index));
       }
    }

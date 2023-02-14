@@ -26,9 +26,8 @@
                   <td>@item.DisplayOrder</td>
                   <td>
                      <div class="w-75 btn-group" role="group">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mx-2"> <i class="bi bi-pencil-square"></i> Edit</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger mx-2"> <i class="bi bi-trash-fill"></i> Delete</a>
-                        <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-success mx-2"> <i class="bi bi-info-square-fill"></i> Detail</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary me-2" style="width:150px"> <i class="bi bi-pencil-square"></i> Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" style="width:150px"> <i class="bi bi-trash-fill"></i> Delete</a>
                      </div>
                      @*<a class="btn btn-secondary mx-2" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i> Edit</a>*@
                      @*<a class="btn btn-info mx-2 my-2" asp-action="Detail" asp-route-id="@item.Id"><i class="bi bi-info-square-fill"></i>&nbsp; Detail</a>*@

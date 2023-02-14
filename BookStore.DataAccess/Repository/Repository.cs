@@ -25,10 +25,10 @@ namespace BookStore.DataAccess.Repository
 
       public IEnumerable<T> GetAll()
       {
-         //IQueryable<T> query = dbSet;
-         //query = query.AsQueryable().AsNoTracking();
-         //return query.ToList();
-         return dbSet.AsQueryable().AsNoTracking().ToList();
+         IQueryable<T> query = dbSet;
+         query = query.AsQueryable().AsNoTracking();
+         return query.ToList();
+         //return dbSet.AsQueryable().AsNoTracking().ToList();
       }
 
       public void Add(T entity)
