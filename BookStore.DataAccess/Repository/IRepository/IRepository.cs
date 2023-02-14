@@ -4,6 +4,7 @@ namespace BookStore.DataAccess.Repository.IRepository
 {
    public interface IRepository<T>
    {
+      //T - Class
       T GetFirstOrDefault(Expression<Func<T, bool>> filter);
       IEnumerable<T> GetAll();
       void Add(T entity);
