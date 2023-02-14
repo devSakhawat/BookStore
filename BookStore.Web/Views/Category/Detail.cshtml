@@ -1,0 +1,28 @@
+﻿@model Category
+
+<div class="row">
+   <div class="col-sm-6">
+      <h2>Detail of @Model.Name</h2>
+   </div>
+</div>
+
+<div class="row">
+   <form method="post" enctype="multipart/form-data">
+      <div class="row">
+         <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(c => c.Name)</label>
+         <div class="col-sm-9">
+            <p>@Html.DisplayFor(c => c.Name)</p>
+         </div>
+      </div>
+
+      <div class="row">
+         <label class="col-sm-3 col-form-label">@Html.DisplayNameFor(c => c.DisplayOrder)</label>
+         <div class="col-sm-9">
+            <p>@Html.DisplayFor(c => c.DisplayOrder)</p>
+         </div>
+      </div>
+      <div class="btn-group" role="group">
+         <a asp-action="Index" class="btn btn-secondary" style="width:150px">Back to List</a>
+      </div>
+   </form>
+</div>
