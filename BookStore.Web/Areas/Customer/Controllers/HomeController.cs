@@ -1,32 +1,48 @@
-﻿using BookStore.Models;
+﻿using BookStore.DataAccess.Repository.IRepository;
+using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace BookStore.Web.Areas.Customer.Controllers
 {
-    public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+	public class HomeController : Controller
+	{
+		private readonly ILogger<HomeController> _logger;
+		private readonly IUnitOfWork _context;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+		public HomeController(ILogger<HomeController> logger, IUnitOfWork context)
+		{
+			_logger = logger;
+			_context = context;
+		}
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+		public IActionResult Index()
+		{
+			IEnumerable<Product> products = _context.Product.GetAll(includeProperties : "Category,CoverType");
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+			return View(products);
+		}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+		public IActionResult Details(int id)
+		{
+			ShoppingCart shoppingCart = new ShoppingCart
+			{
+				Count = 1,
+				Product = _context.Product.GetFirstOrDefault(p => p.Id == id, includeProperties: "Category,CoverType")
+      };
+
+			return View(shoppingCart);
+		}
+
+		public IActionResult Privacy()
+		{
+			return View();
+		}
+
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		public IActionResult Error()
+		{
+			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
+	}
 }
