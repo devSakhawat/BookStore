@@ -5,6 +5,7 @@ using Microsoft.Extensions.FileProviders;
 
 namespace BookStore.Web.Areas.Admin.Controllers
 {
+   [Area("Admin")]
    public class CoverTypeController : Controller
    {
       private readonly IUnitOfWork context;
