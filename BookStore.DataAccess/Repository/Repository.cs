@@ -14,21 +14,36 @@ namespace BookStore.DataAccess.Repository
       {
          context = _context;
          dbSet = context.Set<T>();
+         //context.Products.Include(c => c.Category).Include(ct => ct.CoverType);
       }
 
-      public T GetFirstOrDefault(Expression<Func<T, bool>> filter)
+      public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
       {
          IQueryable<T> query = dbSet;
          query = query.Where(filter);
+         if (includeProperties != null)
+         {
+            foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+               query = query.Include(includeProp);
+            }
+         }
          return query.FirstOrDefault();
       }
 
-      public IEnumerable<T> GetAll()
+      // IncludeProp - "Category,CoverType"
+      public IEnumerable<T> GetAll(string? includeProperties = null)
       {
-         //IQueryable<T> query = dbSet;
-         //query = query.AsQueryable().AsNoTracking();
-         //return query.ToList();
-         return dbSet.AsQueryable().AsNoTracking().ToList();
+         IQueryable<T> query = dbSet;
+         query = query.AsQueryable().AsNoTracking();
+         if (includeProperties != null)
+         {
+            foreach (var includeProp in includeProperties.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
+            {
+               query = query.Include(includeProp);
+            }
+         }
+         return query.ToList();
       }
 
       public void Add(T entity)
