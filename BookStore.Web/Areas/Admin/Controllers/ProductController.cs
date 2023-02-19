@@ -1,5 +1,4 @@
 ﻿using BookStore.DataAccess.Repository.IRepository;
-using BookStore.Models;
 using BookStore.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,20 +36,16 @@ namespace BookStore.Web.Areas.Admin.Controllers
             }),
 
             CoverTypeList = context.CoverType.GetAll().Select(ct => new SelectListItem
-            { 
+            {
                Text = ct.Name,
                Value = ct.Id.ToString()
             })
          };
-        
+
 
          if (id == null || id == 0)
          {
-            //create product
-            //ViewBag.CategoryList = CategoryList;
-            //ViewData["CoverTypeList"] = CoverTypeList;
-
-				return View(productVM);
+            return View(productVM);
          }
          else
          {
@@ -94,7 +89,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
                }
 
                model.Product.ImageUrl = @"\images\products\" + fileName + extension;
-				}
+            }
 
             if (model.Product.Id == 0)
             {
@@ -116,18 +111,18 @@ namespace BookStore.Web.Areas.Admin.Controllers
       public IActionResult GetAll()
       {
          var productList = context.Product.GetAll(includeProperties: "Category,CoverType");
-         return Json(new { data = productList});
+         return Json(new { data = productList });
       }
 
       [HttpGet]
       public IActionResult GetProduct(int? id)
-      { 
+      {
          var product = context.Product.GetFirstOrDefault(x => x.Id == id);
          if (product == null)
          {
             return Json(new { success = false, message = "Error while deleting" });
          }
-         return Json(new { data = product});
+         return Json(new { data = product });
       }
 
 
@@ -149,7 +144,7 @@ namespace BookStore.Web.Areas.Admin.Controllers
 
          context.Product.Remove(product);
          context.Save();
-         return Json(new { success = true, message = "Delete Successful"});
+         return Json(new { success = true, message = "Delete Successful" });
       }
       #endregion
    }

@@ -13,6 +13,7 @@ namespace BookStore.DataAccess.Repository
          Category = new CategoryRepository(context);
          CoverType = new CoverTypeRepository(context);
          Product = new ProductRepository(context);
+         Company = new CompanyRepository(context);
       }
 
       public void Save()
@@ -25,5 +26,6 @@ namespace BookStore.DataAccess.Repository
       public ICoverTypeRepository CoverType { get; private set; }
 
       public IProductRepository Product { get; private set; }
+      public ICompanyRepository Company { get; private set; }
    }
 }

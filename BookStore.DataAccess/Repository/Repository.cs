@@ -14,9 +14,8 @@ namespace BookStore.DataAccess.Repository
       {
          context = _context;
          dbSet = context.Set<T>();
-         //context.Products.Include(c => c.Category).Include(ct => ct.CoverType);
       }
-
+      
       public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
       {
          IQueryable<T> query = dbSet;
