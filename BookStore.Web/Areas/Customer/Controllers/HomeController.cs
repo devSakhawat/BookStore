@@ -1,7 +1,9 @@
 ﻿using BookStore.DataAccess.Repository.IRepository;
 using BookStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BookStore.Web.Areas.Customer.Controllers
 {
@@ -24,15 +26,50 @@ namespace BookStore.Web.Areas.Customer.Controllers
 			return View(products);
 		}
 
-		public IActionResult Details(int id)
+		public IActionResult Details(int productId)
 		{
 			ShoppingCart shoppingCart = new ShoppingCart
 			{
 				Count = 1,
-				Product = _context.Product.GetFirstOrDefault(p => p.Id == id, includeProperties: "Category,CoverType")
-      };
+				ProductId = productId,
+				Product = _context.Product.GetFirstOrDefault(p => p.Id == productId, includeProperties: "Category,CoverType")
+			};
 
 			return View(shoppingCart);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize]
+		public IActionResult Details(ShoppingCart model, int productId)
+		{
+			var claimsIdentity = (ClaimsIdentity)User.Identity;
+			var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+			model.ApplicationUserId = claim.Value;
+
+			ShoppingCart cartFrobDb = _context.ShoppingCart.GetFirstOrDefault(s => s.ApplicationUserId == claim.Value && s.ProductId == model.ProductId);
+
+			if (cartFrobDb == null)
+			{
+            _context.ShoppingCart.Add(model);
+         }
+			else
+			{
+				_context.ShoppingCart.IncrimentCount(cartFrobDb, model.Count);
+			}
+			_context.Save();
+
+			return RedirectToAction(nameof(Index));
+
+			//ShoppingCart shoppingCart = new ShoppingCart
+			//ShoppingCart cardObj = new()
+			//{
+			//	Count = 1,
+			//	ProductId = productId,
+			//	Product = _context.Product.GetFirstOrDefault(p => p.Id == productId, includeProperties: "Category,CoverType")
+			//};
+
+			//return View(cardObj);
 		}
 
 		public IActionResult Privacy()

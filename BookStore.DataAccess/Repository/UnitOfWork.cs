@@ -14,6 +14,8 @@ namespace BookStore.DataAccess.Repository
          CoverType = new CoverTypeRepository(context);
          Product = new ProductRepository(context);
          Company = new CompanyRepository(context);
+         ApplicationUser = new ApplicationUserRepository(context);
+         ShoppingCart = new ShoppingCartRepository(context);
       }
 
       public void Save()
@@ -27,5 +29,7 @@ namespace BookStore.DataAccess.Repository
 
       public IProductRepository Product { get; private set; }
       public ICompanyRepository Company { get; private set; }
+      public IApplicationUserRepository ApplicationUser { get; private set; }
+      public IShoppingCartRepository ShoppingCart { get; private set; }
    }
 }
