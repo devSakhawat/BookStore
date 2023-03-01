@@ -60,16 +60,6 @@ namespace BookStore.Web.Areas.Customer.Controllers
 			_context.Save();
 
 			return RedirectToAction(nameof(Index));
-
-			//ShoppingCart shoppingCart = new ShoppingCart
-			//ShoppingCart cardObj = new()
-			//{
-			//	Count = 1,
-			//	ProductId = productId,
-			//	Product = _context.Product.GetFirstOrDefault(p => p.Id == productId, includeProperties: "Category,CoverType")
-			//};
-
-			//return View(cardObj);
 		}
 
 		public IActionResult Privacy()

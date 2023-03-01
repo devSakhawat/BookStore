@@ -1,5 +1,6 @@
 ﻿using BookStore.DataAccess.Data;
 using BookStore.DataAccess.Repository.IRepository;
+using BookStore.Models;
 
 namespace BookStore.DataAccess.Repository
 {
@@ -16,6 +17,8 @@ namespace BookStore.DataAccess.Repository
          Company = new CompanyRepository(context);
          ApplicationUser = new ApplicationUserRepository(context);
          ShoppingCart = new ShoppingCartRepository(context);
+         OrderDetail = new OrderDetailRepository(context);
+         OrderHeader= new OrderHeaderRepository(context);
       }
 
       public void Save()
@@ -31,5 +34,7 @@ namespace BookStore.DataAccess.Repository
       public ICompanyRepository Company { get; private set; }
       public IApplicationUserRepository ApplicationUser { get; private set; }
       public IShoppingCartRepository ShoppingCart { get; private set; }
+      public IOrderDetailRepository OrderDetail { get; private set; }
+      public IOrderHeaderRepository OrderHeader { get; private set; }
    }
 }
