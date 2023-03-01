@@ -14,9 +14,8 @@ namespace BookStore.DataAccess.Repository
       {
          context = _context;
          dbSet = context.Set<T>();
-         //context.Products.Include(c => c.Category).Include(ct => ct.CoverType);
       }
-
+      
       public T GetFirstOrDefault(Expression<Func<T, bool>> filter, string? includeProperties = null)
       {
          IQueryable<T> query = dbSet;
@@ -32,9 +31,13 @@ namespace BookStore.DataAccess.Repository
       }
 
       // IncludeProp - "Category,CoverType"
-      public IEnumerable<T> GetAll(string? includeProperties = null)
+      public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null,  string? includeProperties = null)
       {
          IQueryable<T> query = dbSet;
+         if (filter != null)
+         {
+            query = query.Where(filter);
+         }
          query = query.AsQueryable().AsNoTracking();
          if (includeProperties != null)
          {

@@ -4,18 +4,18 @@ using BookStore.Models;
 
 namespace BookStore.DataAccess.Repository
 {
-   public class OrderHeaderRepository : Repository<OrderHeader>, IOrderHeaderRepository
+   public class OrderDetailRepository : Repository<OrderDetail>, IOrderDetailRepository
 	{
       private readonly ApplicationDbContext context;
 
-      public OrderHeaderRepository(ApplicationDbContext _context) : base(_context)
+      public OrderDetailRepository(ApplicationDbContext _context) : base(_context)
       {
          context = _context;
       }
 
-      public void Update(OrderHeader entity)
+      public void Update(OrderDetail entity)
       {
-         context.OrderHeaders.Update(entity);
+         context.OrderDetails.Update(entity);
       }
    }
 }
